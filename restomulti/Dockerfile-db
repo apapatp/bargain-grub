@@ -1,0 +1,7 @@
+
+# Use MySQL 5.7 for the base image
+FROM mysql:5.7.16
+
+# Copy database initialisation scripts
+COPY init.sql /docker-entrypoint-initdb.d/
+COPY database.sql /db/
