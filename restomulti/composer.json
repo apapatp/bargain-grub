@@ -1,0 +1,8 @@
+{
+  "require": {
+    "ext-gd": "*"
+  },
+  "scripts": {
+    "post-install-cmd": "sh post-install-cmd.sh"
+  }
+}

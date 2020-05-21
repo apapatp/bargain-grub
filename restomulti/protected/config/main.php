@@ -31,6 +31,16 @@ $patern.="|mercadopago_success|mercadopago_failure|mercadopagoinit";
 
 $patern=strtolower($patern);
 
+$host = $username = $password = $dbname = '';
+
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+if (isset($url["host"]) && isset($url["user"]) && isset($url["pass"]) && isset($url["path"])) {
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $dbname = substr($url["path"], 1);
+}
+
 return array(
 	'name'=>'Karinderia Multiple Restaurant',
 	
@@ -130,15 +140,23 @@ return array(
 		    )		    
 		),
 				
-		'db'=>array(	        
-		    'class'            => 'CDbConnection' ,
-			'connectionString' => 'mysql:host=localhost;dbname=kmrs',
-			'emulatePrepare'   => true,
-			'username'         => 'root',
-			'password'         => '',
-			'charset'          => 'utf8',
-			'tablePrefix'      => 'mt_',
-	    ),			
+		// 'db'=>array(	        
+		//     'class'            => 'CDbConnection' ,
+		// 	'connectionString' => 'mysql:host=localhost;dbname=kmrs',
+		// 	'emulatePrepare'   => true,
+		// 	'username'         => 'root',
+		// 	'password'         => '',
+		// 	'charset'          => 'utf8',
+		// 	'tablePrefix'      => 'mt_',
+	 //    ),	
+	 	'db' => (
+            'class' => 'CDbConnection',
+            'dsn' => 'mysql:host=' . $host . ';dbname=' . $dbname,
+            'username' => $username,
+            'password' => $password,
+            'charset' => 'utf8',
+            'tablePrefix' => 'mt_',
+        ),		
 		
 	    'functions'=> array(
 	       'class'=>'Functions'	       
